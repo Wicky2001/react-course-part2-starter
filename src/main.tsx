@@ -1,13 +1,24 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import './index.css';
+import "bootstrap/dist/css/bootstrap.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "./index.css";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-).render(
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 3,
+    },
+  },
+});
+
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <App />
+      <ReactQueryDevtools></ReactQueryDevtools>
+    </QueryClientProvider>
   </React.StrictMode>
 );
